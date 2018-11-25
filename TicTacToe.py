@@ -4,13 +4,13 @@ empty = "[ ]"
 
 
 def print_stage(stage):
-    for i in range(0, 9):
-        end = ""
-        if i % 3 == 2:
+    for index in range(0, 9):
+        if index % 3 == 2:
             end = "\n"
         else:
             end = " "
-        print(stage[i], end=end)
+
+        print(stage[index], end=end)
 
 
 def stage_init():
@@ -42,14 +42,14 @@ def ended(stage):
     return ret
 
 
-stage = stage_init()
-print_stage(stage)
+game = stage_init()
+print_stage(game)
 wins = 0
 
-for i in range (0,9):
+for turn in range(0, 9):
 
     player = ' '
-    if i % 2 == 0 :
+    if turn % 2 == 0:
         print("유저 1의 차례입니다.")
         player = player1
     else:
@@ -60,27 +60,17 @@ for i in range (0,9):
         location = int(input("놓을 위치를 입력하세요 : ")) - 1
         if location < 0 or location > 8:
             print("잘못된 값입니다.")
-        elif stage[location] != empty:
+        elif game[location] != empty:
             print("이미 놓인 자리입니다.")
         else:
-            stage[location] = player
+            game[location] = player
             break
 
-    print_stage(stage)
-    wins = ended(stage)
+    print_stage(game)
+    wins = ended(game)
     if wins != 0:
         print("유저 %d가 승리하였습니다." % wins)
         break
 
 if wins == 0:
     print("무승부입니다.")
-
-
-
-
-
-
-
-
-
-
