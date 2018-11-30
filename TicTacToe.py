@@ -1,6 +1,6 @@
 player1 = "[O]"
 player2 = "[X]"
-empty = "[ ]"
+empty = "[%d]"
 
 
 def print_stage(stage):
@@ -16,22 +16,26 @@ def print_stage(stage):
 def stage_init():
     stage = []
     for i in range(0, 9):
-        stage.append(empty)
+        stage.append(empty % (i + 1))
     return stage
+
+
+def is_placed(cell):
+    return cell == player1 or cell == player2
 
 
 def ended(stage):
     winner = ""
-    if stage[4] != empty \
+    if is_placed(stage[4]) \
             and ((stage[0] == stage[4] and stage[8] == stage[4]) or (stage[2] == stage[4] and stage[6] == stage[4])):
             winner = stage[4]
     else:
         for i in range(0, 3):
             row = i * 3
-            if stage[row] != empty and stage[row] == stage[row + 1] and stage[row] == stage[row + 2]:
+            if is_placed(stage[row]) and stage[row] == stage[row + 1] and stage[row] == stage[row + 2]:
                 winner = stage[row]
                 break
-            if stage[i] != empty and stage[i] == stage[i + 3] and stage[i] == stage[i+6]:
+            if is_placed(stage[i]) and stage[i] == stage[i + 3] and stage[i] == stage[i+6]:
                 winner = stage[i]
                 break
     ret = 0
@@ -60,7 +64,7 @@ for turn in range(0, 9):
         location = int(input("놓을 위치를 입력하세요 : ")) - 1
         if location < 0 or location > 8:
             print("잘못된 값입니다.")
-        elif game[location] != empty:
+        elif is_placed(game[location]):
             print("이미 놓인 자리입니다.")
         else:
             game[location] = player
